@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class Comment {
-  String postId;
-  int id;
-  String name;
-  String email;
-  String body;
+    String postId;
+    int id;
+    String name;
+    String email;
+    String body;
 }

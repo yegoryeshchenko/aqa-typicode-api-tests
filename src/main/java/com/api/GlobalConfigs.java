@@ -6,10 +6,10 @@ import net.thucydides.core.util.SystemEnvironmentVariables;
 
 public class GlobalConfigs {
 
-  private static final EnvironmentVariables VARIABLES = SystemEnvironmentVariables.createEnvironmentVariables();
+    private static final EnvironmentVariables VARIABLES = SystemEnvironmentVariables.createEnvironmentVariables();
 
-  public static String getApiBaseUrl() {
-    return EnvironmentSpecificConfiguration.from(VARIABLES).getProperty("api.base.url");
-  }
+    public static String getApiBaseUrl() {
+        return EnvironmentSpecificConfiguration.from(VARIABLES).getProperty("api.base.url");
+    }
 
 }
