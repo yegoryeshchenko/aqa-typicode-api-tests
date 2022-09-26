@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
-    id "io.qameta.allure" version '2.8.1'
+    id "io.qameta.allure" version '2.9.6'
 }
 
 repositories {
@@ -35,10 +35,9 @@ test() {
 }
 
 allure {
-    version = '2.8.1'
+    version = '2.19.0'
     autoconfigure = true
-    configuration = 'compile'
     useJUnit5 {
-        version = '2.8.1'
+        version = '2.19.0'
     }
 }
