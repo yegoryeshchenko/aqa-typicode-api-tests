@@ -1,0 +1,71 @@
+//defaultTasks 'clean', 'test', 'aggregate'
+
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id "io.qameta.allure" version '2.8.1'
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.2.5"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+    slf4jVersion = '1.7.7'
+    serenityVersion = '3.2.5'
+    junitVersion = '4.13.1'
+    assertJVersion = '3.8.0'
+    logbackVersion = '1.2.10'
+    restAssuredVersion = '4.3.0'
+    jUnitVersion = '5.8.2'
+    jUnitPlatformLauncherVersion = '1.8.2'
+    commonsValidatorVersion = '1.7'
+}
+
+dependencies {
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}",
+            "net.serenity-bdd:serenity-junit5:${serenityVersion}",
+            "net.serenity-bdd:serenity-rest-assured:${serenityVersion}",
+            "io.rest-assured:json-schema-validator:${restAssuredVersion}",
+            "junit:junit:${junitVersion}",
+            "org.junit.platform:junit-platform-launcher:${jUnitPlatformLauncherVersion}",
+            "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}",
+            "org.junit.vintage:junit-vintage-engine:${jUnitVersion}",
+            "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
+            "org.assertj:assertj-core:${assertJVersion}",
+            "commons-validator:commons-validator:${commonsValidatorVersion}"
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+    useJUnitPlatform()
+}
+
+serenity {
+    testRoot = "starter"
+    // Specify the root directory of any Cucumber feature files
+    requirementsDir = "src/test/resources/features"
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+ext {
+    javaMainClass = "com.baeldung.gradle.exec.MainClass"
+}
+
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
