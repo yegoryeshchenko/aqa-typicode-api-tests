@@ -1,5 +1,6 @@
 package com.api_tests;
 
+import com.api.ApiUtils;
 import com.api.entities.Post;
 import com.api.entities.User;
 import com.api.services.CommentApiService;
@@ -26,7 +27,16 @@ public class TypicodeTests {
 
         List<Post> posts = postApiService.getAllPostsForUser(user.getId());
 
-        commentApiService.verifyThatAllPostsForUserCorrespondsTheTemplate(posts);
+        commentApiService.verifyThatAllPostsForUserCorrespondsTheEmailTemplate(posts);
+    }
+
+    @Test
+    public void commentsResponseShouldFollowTheJSonSchema() {
+        User user = userApiService.getUserByUsername(DELPHINE_USER_NAME);
+
+        List<Post> posts = postApiService.getAllPostsForUser(user.getId());
+
+        commentApiService.commentsResponseShouldFollowTheJsonSchema(posts, "json_objects/comments_response_schema.json");
     }
 
 }

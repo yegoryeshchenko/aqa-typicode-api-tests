@@ -11,7 +11,9 @@ public abstract class AbstractService {
         RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
         return SerenityRest.given()
                 .contentType(ContentType.JSON)
-                .accept(ContentType.JSON);
+                .accept(ContentType.JSON)
+                .log()
+                .uri();
     }
 
 }

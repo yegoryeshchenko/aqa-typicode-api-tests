@@ -1,5 +1,6 @@
 package com.api.services;
 
+import com.api.ApiUtils;
 import com.api.entities.Comment;
 import com.api.entities.Post;
 import io.restassured.response.Response;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CommentApiService extends AbstractService {
 
-    private PostApiService postApiService = new PostApiService();
+    ApiUtils utils = new ApiUtils();
 
     public Response getCommentsForPost(int postId) {
         Response response = setUp()
@@ -29,7 +30,7 @@ public class CommentApiService extends AbstractService {
     }
 
     @Step("all emails in the posts should correspond the email template")
-    public void verifyThatAllPostsForUserCorrespondsTheTemplate(List<Post> posts) {
+    public void verifyThatAllPostsForUserCorrespondsTheEmailTemplate(List<Post> posts) {
         EmailValidator validator = EmailValidator.getInstance();
         for (Post post : posts) {
             List<Comment> comments = getCommentsForUserPosts(post.getId());
@@ -38,6 +39,14 @@ public class CommentApiService extends AbstractService {
                         .as("Email template is wrong!")
                         .isTrue();
             }
+        }
+    }
+
+    @Step("comments response should follow the json schema from {1} file")
+    public void commentsResponseShouldFollowTheJsonSchema(List<Post> posts, String fileName) {
+        for (Post post : posts) {
+            Response response = getCommentsForPost(post.getId());
+            utils.responseShouldFollowJsonSchemaInTheFile(response, fileName);
         }
     }
 
