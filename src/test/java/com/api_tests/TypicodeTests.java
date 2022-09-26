@@ -1,6 +1,5 @@
 package com.api_tests;
 
-import com.api.ApiUtils;
 import com.api.entities.Post;
 import com.api.entities.User;
 import com.api.services.CommentApiService;
@@ -22,12 +21,21 @@ public class TypicodeTests {
     private final CommentApiService commentApiService = new CommentApiService();
 
     @Test
+    public void emailsInTheCommentsShouldBeValid() {
+        User user = userApiService.getUserByUsername(DELPHINE_USER_NAME);
+
+        List<Post> posts = postApiService.getAllPostsForUser(user.getId());
+
+        commentApiService.verifyThatAllUserEmailsInCommentsForUserPostsShouldBeValid(posts);
+    }
+
+    @Test
     public void emailsInTheCommentsShouldCorrespondTemplates() {
         User user = userApiService.getUserByUsername(DELPHINE_USER_NAME);
 
         List<Post> posts = postApiService.getAllPostsForUser(user.getId());
 
-        commentApiService.verifyThatAllPostsForUserCorrespondsTheEmailTemplate(posts);
+        commentApiService.verifyAllEmailsInUserCommentsCorrespondTheTemplate(posts);
     }
 
     @Test
@@ -36,7 +44,13 @@ public class TypicodeTests {
 
         List<Post> posts = postApiService.getAllPostsForUser(user.getId());
 
-        commentApiService.commentsResponseShouldFollowTheJsonSchema(posts, "json_objects/comments_response_schema.json");
+        commentApiService
+                .commentsResponseShouldFollowTheJsonSchema(posts, "json_objects/comments_response_schema.json");
+    }
+
+    @Test
+    public void numberOfCommentsShouldNotExceedMaximum() {
+        commentApiService.verifyNumberOfCommentsDoesNotExceedMaximum(500);
     }
 
 }
