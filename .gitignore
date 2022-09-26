@@ -1,21 +1,9 @@
-.idea
-*.iml
-*.eml
-.classpath
-.project
-.settings
+.idea/
 .gradle/
 /classes
 out/
-/.gradle/
-/.idea/
-/build/
-/target/
-/out/
+.allure/
+allure-results/
 
-
+*.log
 *.class
-*log
-classes/
-bin/
-
