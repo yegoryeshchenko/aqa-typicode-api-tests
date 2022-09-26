@@ -29,8 +29,7 @@ public class CommentApiService extends AbstractService {
     }
 
     @Step("all emails in the posts should correspond the email template")
-    public void verifyThatAllPostsForUserCorrespondsTheTemplate() {
-        List<Post> posts = postApiService.getAllPostsForUser();
+    public void verifyThatAllPostsForUserCorrespondsTheTemplate(List<Post> posts) {
         EmailValidator validator = EmailValidator.getInstance();
         for (Post post : posts) {
             List<Comment> comments = getCommentsForUserPosts(post.getId());

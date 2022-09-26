@@ -1,6 +1,7 @@
 package com.api_tests;
 
 import com.api.entities.Post;
+import com.api.entities.User;
 import com.api.services.CommentApiService;
 import com.api.services.PostApiService;
 import com.api.services.UserApiService;
@@ -21,9 +22,11 @@ public class TypicodeTests {
 
     @Test
     public void emailsInTheCommentsShouldCorrespondTemplates() {
-        userApiService.getUserByUsername(DELPHINE_USER_NAME);
-        List<Post> posts = postApiService.getAllPostsForUser();
-        commentApiService.verifyThatAllPostsForUserCorrespondsTheTemplate();
+        User user = userApiService.getUserByUsername(DELPHINE_USER_NAME);
+
+        List<Post> posts = postApiService.getAllPostsForUser(user.getId());
+
+        commentApiService.verifyThatAllPostsForUserCorrespondsTheTemplate(posts);
     }
 
 }

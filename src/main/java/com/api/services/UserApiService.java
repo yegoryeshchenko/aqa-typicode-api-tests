@@ -20,13 +20,12 @@ public class UserApiService extends AbstractService {
     }
 
     @Step("search for user with name {0}")
-    public void getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         List<User> users = Arrays.asList(getUsers().as(User[].class));
-        User user = getUserIdByUsername(users, username);
-        Serenity.setSessionVariable(USER_OBJECT).to(user);
+        return getUserByUsername(users, username);
     }
 
-    private User getUserIdByUsername(List<User> users, String username) {
+    private User getUserByUsername(List<User> users, String username) {
         return users.stream()
                 .filter(user -> user.getUsername().equals(username)).findFirst().get();
     }
