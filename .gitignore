@@ -1,5 +1,6 @@
 .idea/
 .gradle/
+.build/
 /classes
 out/
 .allure/
@@ -7,3 +8,4 @@ allure-results/
 
 *.log
 *.class
+*.txt
